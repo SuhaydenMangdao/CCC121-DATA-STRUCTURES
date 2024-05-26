@@ -1,0 +1,77 @@
+//Suhayden S. Mangdao
+//CCC121-IT2B.1
+
+/* INPUT: SIZE OF THE ARRAY AND CORRESPONDING INTEGERS
+ * OUTPUT: 3 MAX NUMBERS */
+
+import java.util.*;  //import necessary utilities
+public class  Machineproblem1 {  //public class
+    
+    public static void dis_array(){     //function which is outputted in accordance with the values in the main method
+    Scanner sc=new Scanner(System.in);  //syntax for scanner//necessary to get input from the user
+     
+    try{//tracks error if user tries to put decimal input //runs catchException(e) if satisfied
+        
+        System.out.print("Enter the size of the array ");   //ask integer from user or the size of array
+        
+        int x=sc.nextInt();  //stores an input to x
+        
+    if (x<3){// this line will check if x (size of the array) is less than 3 else it will show the error message
+       System.out.println("Please Enter 3 or above Integers") ;// this will be executed if x is less than 3
+    }
+    else{ // if x is not less than 3 the line below will be executed
+    int[] array = new int[x]; //this line is assigned for initialization it means the value of x  will assign the length or size of the array    
+        for(int i=0; i<x; i++)  {  // the value of x is also the number of repetitions
+            System.out.print("Enter Integer: ");//this line will ask input from the user
+            
+        boolean isInt = sc.hasNextInt();// this line will check if the input is integer// if isInt is an integer it will be TRUE otherwise FALSE
+        float num = sc.nextFloat();// this line will convert the variable into decimal format regardless the input of the user
+         
+        if (isInt && (int)num>-1){// if IsInt is true or the converted number is more than negative 1 the next line will be  executed
+        array[i]=(int)num;  //if the condition in previous line is satisfied,it will store the input to array// it will only store integer or 0 to infinity
+        }
+  
+        else{ //if input is decimal or negative this will be executed//doesn't store input on array
+        System.out.println("You've Inputted NEGATIVE OR DECIMAL!, Please RE-ENTER,ONLY POSITIVE INTEGERS!");//this will be displayed if the "if"statement is not satisfied
+         i--;// after displaying the message in previous line the loop will decrement as the user's input is either decimal or negative
+        }
+    }
+    // when the input in array is completed it will run the next line
+       Arrays.sort(array);// this function sorts the array in ascending order
+        
+       int ind = array.length; //array.length represent max number of slots in array//
+       
+       //the last 3 elements of an array represents the max 1, max 2, max 3
+
+    System.out.println("Max1 = " + array[ind-1] ); //this displays the max 1
+    System.out.println("Max2 = " + array[ind-2]); //this displays the max 2
+    System.out.println("Max3 = " + array[ind-3] ); //this displays the max 3
+}
+}catch (Exception e){// if user puts a decimal in the size of the array the code next line will be executed 
+    System.out.println("You've Inputted DECIMAL!Please enter POSITIVE INTEGERS ONLY!");
+}
+}
+    
+    public static void main(String[] args)   { 
+        Scanner sc=new Scanner(System.in);  //syntax for scanner//necessary to get input from the user
+        boolean dis_loop = true; // start off being true, to run the code "public static void runMyCode()"
+
+  while(dis_loop){
+    dis_array(); // the code "public static void runMyCode()" will execute completely before the computer ask if the user wants to continue 
+    
+//once the code "public static void runMyCode()" executed completely it displays the code next line 
+    System.out.print("Would You Like to Continue (y/n)?   ");
+    char answer = sc.next().charAt(0); //if user's input is 'y' or 'n' it will store the answer to variable that is datatype character
+
+ 
+    if (answer == 'y'){// if the user's input to the previous line is "y" it will execute the code next line 
+      dis_loop = true; // the code "public static void runMyCode()" will be executed if the user's input is "y"
+      }
+    else {// else if the user's input is not "y" the next line will be displayed and it executes the last command
+       System.out.println("Thank you for participating!"); 
+             dis_loop = false; 
+    
+}  
+}
+}
+}

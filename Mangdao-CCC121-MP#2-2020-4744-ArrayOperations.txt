@@ -1,0 +1,423 @@
+﻿//Suhayden S. Mangdao
+//CCC121-IT2B.1
+//MachineProblem2
+import java.util.InputMismatchException;
+import java.util.Scanner;
+public class MachineProblem2
+{
+	static boolean insertion(Scanner sc, int[] arr, int n)
+	{
+		int index = 0;
+		int element = 0;
+		if(n == 20)
+		{
+			System.out.println("\nArray is full");
+			System.out.println("Press enter...");
+			return false;
+		}
+		try
+		{
+			System.out.print("\nEnter Element: ");
+			element = sc.nextInt();
+		} catch(InputMismatchException e)
+		{
+			System.out.println("\nInvalid Input");
+			return false;
+		}
+		try 
+		{
+			System.out.print("Insert at Index: ");
+			index = sc.nextInt();
+		} catch(InputMismatchException e)
+		{
+			System.out.println("\nInvalid Input");
+			return false;
+		}
+		if(index > n || index < 0)
+		{
+			System.out.println("\nInvalid Index");
+			return false;
+		}
+		
+		for(int i=n; i>index; i--)
+		{
+			arr[i] = arr[i-1];
+		}
+		
+		arr[index] = element;
+		
+		return true;
+	}
+	
+	static boolean deletion(Scanner sc, int[] arr, int n)
+	{
+		int index = 0;
+		
+		try 
+		{
+			System.out.print("\nEnter Index to Delete: ");
+			index = sc.nextInt();
+		} catch(InputMismatchException e)
+		{
+			System.out.println("\nInvalid Input");
+			return false;
+		}
+		if(index >= n || index < 0 || n == 0)
+		{
+			System.out.println("\nInvalid Index");
+			return false;
+		}
+
+		System.out.println("\nElement " + arr[index] + " deleted");
+		for(int i=index; i<n; i++)
+		{
+			arr[i] = arr[i+1];
+		}
+		return true;
+	}
+	
+	static void search(Scanner sc, int[] arr, int n)
+	{
+		String through;
+		int element, index;
+		boolean found = false;
+		
+		System.out.println("\na. Search through element");
+		System.out.println("b. Search through index");
+		System.out.print("\nEnter: ");
+		through = sc.nextLine();
+		
+		switch(through)
+		{
+		case "a", "A":
+			try
+			{
+				System.out.print("\nEnter Element: ");
+				element = sc.nextInt();
+			} catch(InputMismatchException e)
+			{
+				System.out.println("\nInvalid Input");
+				return;
+			}
+			for(int i=0; i<n; i++)
+			{
+				if(arr[i] == element)
+				{
+					System.out.println("\nIndex number: " + i);
+					found = true;
+				}
+			}
+			if(!found)
+			{
+				System.out.println("\nElement " + element + " is not found");
+			}
+			sc.nextLine();
+			break;
+		case "b", "B":
+			try
+			{
+				System.out.print("\nEnter Index: ");
+				index = sc.nextInt();
+			} catch(InputMismatchException e)
+			{
+				System.out.println("\nInvalid Input");
+				return;
+			}
+			for(int i=0; i<n; i++)
+			{
+				if(i == index)
+				{
+					System.out.println("\nElement: " + arr[i]);
+					found = true;
+				}
+			}
+			if(!found)
+			{
+				System.out.println("\nInvalid index");
+			}
+			sc.nextLine();
+			break;
+		default:
+			System.out.println("\nInvalid Input");
+		}
+	}
+	
+	static void update(Scanner sc, int[] arr, int n)
+	{
+		int index = 0;
+		int newEl;
+		boolean found = false;
+		
+		try
+		{
+			System.out.print("\nEnter Index: ");
+			index = sc.nextInt();
+		} catch(InputMismatchException e)
+		{
+			System.out.println("\nInvalid Input");
+			return;
+		}
+		
+		for(int i=0; i<n; i++)
+		{
+			if(i == index)
+			{
+				System.out.println("\nElement at index " + index + " = " + arr[i]);
+				try
+				{
+					System.out.print("Enter New Element: ");
+					newEl = sc.nextInt();
+				} catch(InputMismatchException e)
+				{
+					System.out.println("\nInvalid Input");
+					return;
+				}
+				arr[i] = newEl;
+				found = true;
+			}
+		}
+		
+		if(!found)
+		{
+			System.out.println("\nInvalid index");
+		}
+	}
+	
+	static void findMin(int[] arr, int n)
+	{
+		int firstmin = 100000, secmin = 100000, thirdmin = 100000;
+	    for (int i = 0; i < n; i++)
+	    {
+	        if (arr[i] < firstmin)
+	        {
+	            thirdmin = secmin;
+	            secmin = firstmin;
+	            firstmin = arr[i];
+	        }
+	        else if (arr[i] < secmin)
+	        {
+	            thirdmin = secmin;
+	            secmin = arr[i];
+	        }
+	        else if (arr[i] < thirdmin)
+	            thirdmin = arr[i];
+	    }
+	    System.out.println("\n3 Minimum elements: " + firstmin + " " + secmin + " " + thirdmin);
+	}
+	
+	static void findElem(Scanner sc, int[] arr, int n)
+	{
+		int index = 0;
+		
+		try
+		{
+			System.out.print("\nEnter Index: ");
+			index = sc.nextInt();
+		} catch(InputMismatchException e)
+		{
+			System.out.println("\nInvalid Input");
+			return;
+		}
+		if(index > n || index < 0)
+		{
+			System.out.println("\nInvalid Index");
+			return;
+		}
+		
+		System.out.println("\nElements under index " + index + ":");
+		for(int i=0; i<index; i++)
+		{
+			System.out.print(arr[i] + " ");
+		}
+		System.out.println();
+	}
+	
+	static void compareElem(Scanner sc, int[] arr, int n)
+	{
+		int index = 0;
+		
+		try
+		{
+			System.out.print("\nEnter Index: ");
+			index = sc.nextInt();
+		} catch(InputMismatchException e)
+		{
+			System.out.println("\nInvalid Input");
+			return;
+		}
+		if(index >= n || index < 0 || index == n-1)
+		{
+			System.out.println("\nInvalid Index");
+			return;
+		}
+		
+		if(arr[index] < arr[index+1])
+		{
+			System.out.println("\nTrue");
+			System.out.println(arr[index] + " is less than " + arr[index+1]);
+		}
+		else 
+		{
+			System.out.println("\nFalse");
+			System.out.println(arr[index] + " is greater than " + arr[index+1]);
+		}
+	}
+	
+	static void isArrEmpty(int n)
+	{
+		if(n == 0)
+		{
+			System.out.println("\nArray is Empty.");
+		}
+		else
+		{
+			System.out.println("\nArray is not Empty.");
+		}
+	}
+	
+	static void isArrFull(int n)
+	{
+		if(n == 20)
+		{
+			System.out.println("\nArray is Full.");
+		}
+		else
+		{
+			System.out.println("\nArray is not Full.");
+		}
+	}
+	
+	static void display(int[] arr, int n)
+	{
+		System.out.println("\nElements in the array:");
+		for(int i=0; i<n; i++)
+		{
+			System.out.print(arr[i] + " ");
+		}
+		System.out.println();
+	}
+
+	public static void main(String[] args)
+	{
+		Scanner sc = new Scanner(System.in);
+		int[] arr = new int[20];
+		int n = 0;
+		String op = "1";
+		boolean cont = false;
+		
+		do
+		{
+			try
+			{
+				System.out.print("\nInput how many elements in the array: ");
+				n= sc.nextInt();
+			} catch(InputMismatchException e)
+			{
+				System.out.println("\nInvalid Input...");
+				sc.next();
+				cont = true;
+				continue;
+			}
+			cont = false;
+			if(n > 20)
+			{
+				System.out.println("\n20 is the max size of the array...");
+			}
+		} while(cont || n > 20);
+		
+		System.out.println("\nInput " + n + " elements in the array:");
+		for(int i=0; i<n; i++)
+		{
+			do
+			{
+				try
+				{
+					System.out.print("Element " + i + ": ");
+					arr[i] = sc.nextInt();
+				} catch(InputMismatchException e)
+				{
+					System.out.println("\nInvalid Input...");
+					sc.next();
+					cont = true;
+					continue;
+				}
+				cont = false;
+			} while(cont);
+		}
+		sc.nextLine();
+		
+		do
+		{
+			
+			System.out.println("\nArray Basic Operations\n");
+			System.out.println("a. Insertion\nb. Deletion\nc. Search\nd. Update");
+			System.out.println("e. Find Minimum\nf. Find Elements\ng. Compare Elements");
+			System.out.println("h. Is Array Empty?\ni. Is Array Full?\nj. Display Array\n[0] Exit\n");
+			System.out.print("Enter the Letter of Chosen Operation: ");
+			op = sc.nextLine();
+			
+			switch (op)
+			{
+			case "a", "A":
+				Boolean inserted = insertion(sc, arr, n);
+				if(inserted)
+				{	
+					n++;
+					display(arr, n);
+				}
+				sc.nextLine();
+				break;
+			case "b", "B":
+				Boolean deleted = deletion(sc, arr, n);
+				if(deleted)
+				{
+					n--;
+					display(arr, n);
+				}
+				sc.nextLine();
+				break;
+			case "c":
+				search(sc, arr, n);
+				display(arr, n);
+				break;
+			case "d":
+				update(sc, arr, n);
+				display(arr, n);
+				sc.nextLine();
+				break;
+			case "e":
+				findMin(arr, n);
+				display(arr, n);
+				break;
+			case "f":
+				findElem(sc, arr, n);
+				display(arr, n);
+				sc.nextLine();
+				break;
+			case "g":
+				compareElem(sc, arr, n);
+				display(arr, n);
+				sc.nextLine();
+				break;
+			case "h":
+				isArrEmpty(n);
+				break;
+			case "i":
+				isArrFull(n);
+				break;
+			case "j":
+				display(arr, n);
+				break;
+			case "0":
+				System.out.println("\nExiting...");
+				break;
+			default:
+				System.out.println("\nInvalid Input: " + op);
+			}
+			
+		} while(op.compareTo("0") != 0);
+		
+		sc.close();
+	}
+
+}

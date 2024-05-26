@@ -1,0 +1,170 @@
+import java.util.*;
+public class Mangdao
+{
+    
+    //this is a function for the precedence of operator using if else
+    //higher precedence has higher return value
+    public static int Prec(char smb)
+    {
+        if(smb == '^')                 //exponent operator have highest precedence
+        {
+        return(3);
+    }
+    else if(smb == '*' || smb == '/') //two operators can have an equal precedence and is being read from left to right
+        {
+        return(2);
+    }
+    else if(smb == '+' || smb == '-')          //lowest precedence
+    {
+        return(1);
+    }
+    else
+    {
+        return(0);
+    }
+    }
+    
+    // This method converts cleaned infix expression to postfix expression.
+    
+    static String conversion(String CLinf)
+    {
+        // initialize empty String for the result
+        String result = new String("");
+        
+        // initialize the empty stack
+        Stack<Character> stack = new Stack<>();
+        
+        //each character of the infix expression is being run to this for loop
+        for (int i = 0; i<CLinf.length(); ++i)
+        {
+            char c = CLinf.charAt(i);  //returns a character at a specific index position in a string
+            
+            // outputs the operand if it is scanned
+            if (Character.isLetterOrDigit(c))
+                result += c;
+            
+            // if the scanned char is '(',push it to the stack 
+            else if (c == '(')
+                stack.push(c);
+            
+            // If the scanned char is ')',pop and output from the stack
+            else if (c == ')')
+            {
+            	//while the stack is not empty and until ( is found
+            	//pop the stack and output the remaining items to postfix
+                while (!stack.isEmpty() && 
+                        stack.peek() != '(')	
+                    result += stack.pop();
+                
+                    stack.pop();					
+            }
+            else     // this is when an operator is scanned
+            {
+            	//while the stack is not empty and 	the prec of operator
+            	//is less than or equal sa precedence nga naa sa stack
+            	//then pop the stack and output the operator sa postfix		
+                while (!stack.isEmpty() && Prec(c) //the precedence method is being used here,(static int Prec(char smb))
+                        <= Prec(stack.peek())){
+                
+                    result += stack.pop();	
+            }
+                stack.push(c);
+            }
+    
+        }
+    
+        // pop all the remaining operators from the stack and output to postfix
+        while (!stack.isEmpty()){
+            if(stack.peek() == '(')
+                return "Invalid Expression please put a valid expression";
+            result += stack.pop();
+        }
+        return result;
+    }
+    public static Float evaluatePostfix(String Pfix)
+    {
+        //create a stack
+        Stack<Float> stack=new Stack<>();
+        
+        // Scan all characters one by one
+        for(int i=0;i<Pfix.length();i++)
+        {
+            char c=Pfix.charAt(i);
+            
+            // If the scanned character is an operand (number here),
+            // push it to the stack.
+            if(Character.isDigit(c))
+            stack.push((float) (c - '0'));
+            
+            //  If the scanned character is an operator, pop two
+            // elements from stack apply the operator
+            else
+            {
+                Float val1 = stack.pop();
+                Float val2 = stack.pop();
+                
+                switch(c)
+                {
+                    case '+':
+                    stack.push(val2 + val1);
+                    break;
+                    
+                    case '-':
+                    stack.push(val2 - val1);
+                    break;
+                    
+                    case '/':
+                    stack.push(val2 / val1);
+                    break;
+                    
+                    case '*':
+                    stack.push(val2 * val1);
+                    break;
+                    
+                    case '^':
+                    stack.push((float) Math.pow(val2,val1));
+                    break;
+              }
+            }
+        }
+        return stack.pop();    
+    }
+  
+    //main method gets the infix expression from the user
+    //and outputs postfix expression when the 2 methods above is finished
+    public static void main(String[] args)
+    {
+        //gets infix expression from the user
+            Scanner scanner = new Scanner(System.in);
+            
+            while (true) {
+                System.out.print("Do you want to input Infix expression?[y/n] " );
+                String input = scanner.nextLine();
+                if (input.equals("n")) {
+                	System.out.println("Thank you");
+                	break;
+                }
+                else if(input.equals("y")){
+            System.out.println("-------------------------------------------------");    
+            System.out.print("Infix Expression: ");
+            String CLinf = scanner.nextLine();
+            
+            //removing all spaces from the input by replacing all spaces with nothing
+            CLinf = CLinf.replaceAll("\\s","");
+            
+            //Outputs the postfix expression
+            System.out.println("Postfix Expression: " + conversion(CLinf));
+            String Pfix = conversion(CLinf);
+            
+            if (CLinf.matches(".*[a-z].*")) { 
+            	System.out.println(CLinf + " cannot be evaluated because it have inexecutable input");
+            }
+            else
+                System.out.println("The result of the inputted equation is: "+evaluatePostfix(Pfix));   
+            System.out.println("-------------------------------------------------");    
+            }
+
+            
+    }		    
+    }
+}

@@ -1,0 +1,342 @@
+//Mangdao, Suhayden S.
+///CCC121 - IT2B.1
+
+//The Program will ask for number of name or data to be entered
+// then the user will input the name and age
+//the program will then run on loop if the user want to
+//sort,delete,insert
+//for every function called it will always traverse and tracks
+//the number of nodes
+//the user will also have the power to terminate the program
+import java.util.*;
+
+// A Linked List Node
+class Node
+{
+    String name; //string data
+    int age; // integer data
+    Node next; // pointer to the next node
+ 
+    public Node(int age,String name)
+    {
+        // set data in the allocated node and return it
+        this.name = name;
+        this.age = age;
+        this.next = null; //set as null kay wala pa man nagpoint ug valid object ang pointer
+    }
+}
+ 
+class Queue
+{
+    private static Node rear = null, front = null; //initialize queue variables
+    private static int count = 0;
+ 
+    public void Delete() {  
+  
+        //Checks if the list is empty  
+        if(front == null) {  
+            System.out.println("List is empty");  
+            return;  
+        }  
+        else {  
+            //Checks whether the list contains only one element  
+            if(rear != front ) {  
+                Node current = rear;  
+                //Loop through the list till the second element from the current node
+                while(current.next != front) {  
+                    current = current.next;  
+                }  
+                //Second element will become new front of the list  
+                front = current;  
+                front.next = null;//delete
+            }  
+            //If the list contains only one element  
+            //Then it will remove it and both head and tail will point to null  
+            else {  
+                rear = front = null;  
+            }  
+            count -= 1;
+        } 
+    }  
+    
+    // Utility function to add an item to the queue
+    public void Insert(int age,String name) // insertion at the end
+    {
+        //Create a new node  
+        Node newNode = new Node(age,name);  
+  
+        //Checks if the list is empty  
+        if(rear == null) {  
+            //If list is empty, both head and tail will point to new node  
+            rear = newNode;  
+            front = newNode;  
+        }  
+        else {  
+            //newNode will be added after tail such that tail's next will point to newNode  
+            newNode.next = rear;  
+            //newNode will become new tail of the list  
+            rear = newNode;  
+        }  
+        count += 1;
+    }
+ 
+    // Utility function to check if the queue is empty or not
+    public boolean isEmpty() {
+        return rear == null && front == null;
+    }
+ 
+    // Function to return the size of the queue
+    public int size() {
+        return count;
+    }
+    
+     public void Traverse() { // this method will display the content of the queue
+        //Node current will point to head  
+        Node current = rear;  
+        if(rear == null) {  
+            System.out.println("List is empty");  
+            return;  
+        }  
+        while(current != null) {  
+            //Prints each node by incrementing pointer  
+            System.out.println(current.name + " " + current.age);  
+            current = current.next;  
+        }
+    } 
+     // sortList() will sort nodes of the list in ascending
+    // order
+    public void sortList(String sorttype)
+    {
+        // Node current will point to head
+        Node current = rear, index = null;
+        Node secondval;
+        String temporary;
+        int temp;
+        switch(sorttype){
+            case "Age"://sorting by age
+                if (rear == null) {
+                    return;
+                }
+                else {
+                    while (current != null) {
+                        // Node index will point to node next to
+                        // current
+                        secondval = current.next; //initialize
+                        index = current.next; //initialize
+
+                        while (index != null) {
+                            // If current node's data is greater
+                            // than index's node data, swap the data
+                            // between them
+                            if (current.age > index.age) {
+                                temp = current.age;
+                                temporary = current.name;
+                                current.age = index.age;
+                                current.name = secondval.name;
+                                index.age = temp;
+                                secondval.name = temporary;
+                            }
+                            index = index.next;
+                            secondval = secondval.next;
+                        }
+                        current = current.next;
+                    }
+                }
+                break; 
+            case "Name": //sorting by name
+                while(current !=null){
+                        // Node index will point to node next to
+                        // current
+                        secondval = current.next;
+                        index = current.next;
+                        while (secondval != null) {
+                            // If current node's data is greater
+                            // than index's node data, swap the data
+                            // between them
+                            if (current.name.compareTo(secondval.name) > 0) {
+                                temporary = current.name;
+                                temp = current.age;
+                                current.name = secondval.name;
+                                current.age = index.age;
+                                secondval.name = temporary;
+                                index.age = temp;
+                            }
+
+                            secondval = secondval.next;
+                            index = index.next;
+                        }
+                        current = current.next;
+                }
+                break;
+            }
+        }
+        
+}
+
+//main class
+public class Mangdao_2020_4744_LinkedList_Q_Program {
+    public static void main(String [] args)
+    {
+        try (Scanner sc = new Scanner(System.in)) {
+                Queue queue=new Queue();
+                System.out.print("How many name you want to Enter: ");
+       int quantity=sc.nextInt();
+       for(int x=1; x<=quantity;x++){
+           System.out.print("Enter Name: ");
+           sc.nextLine();
+           String name=sc.nextLine();
+           
+           
+           System.out.print("Enter Age: ");
+           int age=sc.nextInt();
+           
+           queue.Insert(age, name);
+       }
+       
+       
+       System.out.println();
+       System.out.println("Content of Queue");
+       queue.Traverse();
+       System.out.println("Number of Nodes: "+queue.size());
+       
+       sc.nextLine();
+       
+       String dash="y";
+       do{
+           System.out.println("-------------------------------------------------");
+           System.out.println("Sort or Delete or Insert?");
+           System.out.println("-------------------------------------------------");
+           System.out.print("Do you want to Sort/Delete/Insert/Exit? [S/D/I/E] : ");
+           String cho=sc.nextLine();
+           
+           if(cho.trim().equals("S")){
+               String sor="y";
+               do{
+                   System.out.println("-------------------------------------------------");
+                   System.out.println("Sort");
+                   System.out.println("-------------------------------------------------");
+                   System.out.print("Enter type of Sorting [Name/Age] ");//case sensitive!
+                   String sorttype=sc.next();
+                   
+                   System.out.println("Content after sorting by "+sorttype+": ");
+                   queue.sortList(sorttype);
+                   queue.Traverse();
+                   
+                   sc.nextLine();
+                   
+                   System.out.println("-------------------------------------------------");
+                   System.out.println("Sort Again?");
+                   System.out.println("-------------------------------------------------");
+                   System.out.println("Do you want to Sort Again? [y/n] :");
+                   String sortchoice=sc.nextLine();
+                   
+                   if(sortchoice.equals("n")){
+                       sor="n";
+                   }
+               }while(sor=="y");
+               
+           }else if(cho.trim().equals("D")){
+               String del="y";
+               do{
+                   System.out.println("-------------------------------------------------");
+                   System.out.println("Delete");
+                   System.out.println("-------------------------------------------------");
+                   
+                      queue.Delete();
+                   System.out.println("Content of Queue after Deleting");
+                   queue.Traverse();
+                   System.out.println("Number of Nodes: "+queue.size());
+                   
+                   System.out.println("-------------------------------------------------");
+                   System.out.println("Delete Again?");
+                   System.out.println("-------------------------------------------------");
+                   System.out.println("Do you want to Delete Again? [y/n] :");
+                   String delchoice=sc.nextLine();
+                   
+                   if(delchoice.equals("n")){
+                       del="n";
+                   }
+               }while(del=="y");
+           }else if(cho.trim().equals("I")){
+               String ins="y";
+               do{
+                   System.out.println("-------------------------------------------------");
+                   System.out.println("Insert");
+                   System.out.println("-------------------------------------------------");
+                   
+                   System.out.print("Enter Name: ");
+                   String name=sc.nextLine();
+                   
+                   System.out.print("Enter Age: ");
+                   int age=sc.nextInt();
+                   
+                   queue.Insert(age, name);
+                   
+                   System.out.println("-------------------------------------------------");
+                   System.out.println("Content of Queue");
+                   queue.Traverse();
+                   System.out.println("Number of Nodes: "+queue.size());
+                   System.out.println("-------------------------------------------------");
+                   
+                   sc.nextLine();
+                   System.out.println("-------------------------------------------------");
+                   System.out.println("Insert Again?");
+                   System.out.println("-------------------------------------------------");
+                   System.out.println("Do you want to Insert Again? [y/n] :");
+                   String insertchoice=sc.nextLine();
+                   
+                   if(insertchoice.equals("n")){
+                       ins="n";
+                   }
+               }while(ins=="y");
+            }else if(cho.trim().equals("E")){
+                dash="n";
+            }else{
+               System.out.println("Invalid Input");
+           }
+       }while(dash.equals("y"));
+                if(queue.isEmpty()){
+                    System.out.println("Queue is Empty!");
+                }
+  }
+    }
+}
+//Algorithm
+//Step1: Declare variables
+//Step2: Initialize node
+//Step3: Initialize Queue
+//Step3: Ask the user how many data to be entered
+//Step4: Ask the user for data pair name and age
+//Step5: Check if the list is empty 
+//Step6: else, Traverse and display the content of the queue and the number of nodes
+//Step7: Ask the user if he/she want to Sort, Delete, Insert, Exit
+//Step8: If choice is "S" for Sort
+ //Step8.1: Ask if the user want to sort by name or age
+ //Step8.2: If the sort type is Name
+  //Step8.2.1: Sort the list by name
+  //Step8.2.2: Traverse and display the content of queue and the number of nodes
+  //Step8.2.3: Ask if the user want to sort again
+  //Step8.2.4: If the choice is yes then back to step8.2.1
+  //Step8.2.5: Else, back to step7
+ //Step8.3: If the sort type is Age
+  //Step8.3.1: Sort the list by Age
+  //Step8.3.2: Traverse and display the content of the queue and the number of nodes
+  //Step8.3.3: Ask if the user want to sort again
+  //Step8.3.4: If the choice is yes then back to step8.2.1
+  //Step8.3.5: Else, back to step7
+//Step9: Else If choice is "D" for Delete
+ //Step9.1: Check if the list is empty,if empty display The list is empty
+ //Step9.2: Else, Delete the front node and decrement the number of nodes by one
+ //Step9.3: Traverse and display the content of the queue and the number of nodes
+ //Step9.4: Ask if the user want to delete again
+ //Step9.5: If yes then back to step 9.1
+ //Step9.6: else, back to step 7;
+//Step10: Else if choice is "I" for insert
+ //Step10.1: Ask for data pair from user name and age
+ //Step10.2: Add the input to the list
+ //Step10.3: traverse and display the content of the queue and the number of nodes
+ //step10.5: Ask if the user want to insert again
+ //Step10.6: If yes then back to step 10.1
+ //Step10.7: Else, back to step7
+//Step11: Else if choice is Exit
+ //Step11.1: Terminate Program
